@@ -1,6 +1,7 @@
 const { CosmosClient } = require("@azure/cosmos");
 const endpoint = process.env["CosmosDBEndpoint"];
 const key = process.env["CosmosDBAuthKey"];
+
 const databaseName = process.env["DatabaseName"];
 const collectionName = process.env["configCollectionName"];
 const client = new CosmosClient({ endpoint, key });
@@ -8,6 +9,7 @@ const database = client.database(databaseName);
 const container = database.container(collectionName);
 
 module.exports = async function (context, req) {
+    console.log ("req  " + JSON.stringify (req));
     console.log (collectionName)
     context.log('JavaScript HTTP trigger function processed a request.');
 
@@ -41,7 +43,9 @@ module.exports = async function (context, req) {
         "primaryEmailContact": req.body.primaryEmailContact,
         "secondaryEmailContact": req.body.secondaryEmailContact,
         "lookbackTimeForLog": req.body.lookbackTimeForLog,
-        "ccToUser": req.body.ccToUser
+        "ccToUser": req.body.ccToUser,
+        "defaultInd": req.body.defaultInd,
+        "displayInd": req.body.displayInd
     }
     console.log ("_______________________________")
     console.log (items.length)
